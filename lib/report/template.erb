@@ -3,11 +3,11 @@
 
 <head>
     <title>Test Results: <%= @device[:name] %>, <%= @time %></title>
-	<link rel="stylesheet" href="<%= @assets_path %>/css/zucchini.report.css" type="text/css" media="screen">
-	<script src="<%= @assets_path %>/js/jquery.js"></script>
-	<script src="<%= @assets_path %>/js/jquery.ui.core.js"></script>
-	<script src="<%= @assets_path %>/js/jquery.effects.core.js"></script>
-	<script src="<%= @assets_path %>/js/zucchini.report.js"></script>
+	<link rel="stylesheet" href="css/zucchini.report.css" type="text/css" media="screen">
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.ui.core.js"></script>
+	<script src="js/jquery.effects.core.js"></script>
+	<script src="js/zucchini.report.js"></script>
 </head>
 <body class="<%= @ci %>">
 	<header>
@@ -35,7 +35,7 @@
 				<dl class="<%= css_class %> <%= css_class == 'failed' ? 'expanded' :'' %> screen">
 					<dt><%= s.file_name %></dt>
 					<% %W(actual expected difference).each do |type| %>
-					<dd class="<%= s.result_images[type.to_sym] ? '' : 'hidden' %>"><p><%= type.capitalize %></p><img src="<%= s.result_images[type.to_sym] %>"/></dd>
+					<dd class="<%= s.result_images[type.to_sym] ? '' : 'hidden' %>"><p><%= type.capitalize %></p><img src="<%= relative_image_path(s.result_images[type.to_sym]) %>"/></dd>
 					<% end %>
 				</dl> 
 				<% end %>              

@@ -11,7 +11,8 @@ class Zucchini::Runner < Clamp::Command
     raise "Directory #{path} does not exist" unless File.exists?(path)
     
     @path = File.expand_path(path)
-    Zucchini::Config.base_path = File.exists?("#{path}/feature.zucchini") ? File.dirname(path) : path
+    @single_feature_test = File.exists?("#{path}/feature.zucchini")
+    Zucchini::Config.base_path = @single_feature_test ? File.dirname(path) : path
       
     raise "ZUCCHINI_DEVICE environment variable not set" unless ENV['ZUCCHINI_DEVICE']
     @device = Zucchini::Config.device(ENV['ZUCCHINI_DEVICE'])   
@@ -36,8 +37,14 @@ class Zucchini::Runner < Clamp::Command
     
     compare_threads.each { |name, t| t.abort_on_exception = true; t.join }
     
-    Zucchini::Report.present(features, ci?) unless (collect? && !compare?)
+    Zucchini::Report.present(features, ci?, report_path) unless (collect? && !compare?)
     features.inject(true){ |result, feature| result &= feature.succeeded }
+  end
+  
+  def report_path
+    report_name = "zucchini_report.html"
+    report_path = @single_feature_test ? @path+"/../.." : @path+"/.."
+    report_path = report_path+"/report/"+report_name
   end
   
   def features
