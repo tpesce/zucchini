@@ -43,7 +43,8 @@ class Zucchini::Runner < Clamp::Command
   
   def report_path
     report_name = "zucchini_report.html"
-    report_path ||= @single_feature_test ? @path+"/../../"+report_name : @path+"/../"+report_name
+    report_path = @single_feature_test ? @path+"/../.." : @path+"/.."
+    report_path = report_path+"/report/"+report_name
   end
   
   def features

@@ -15,7 +15,10 @@ class Zucchini::Report
   def self.html(features, ci, report_html_path = "/tmp/zucchini_report.html" )
     template_path = File.expand_path("#{File.dirname(__FILE__)}/report/template.erb")
     
-    report = Zucchini::ReportView.new(features, ci) 
+    report_dir = File.dirname(report_html_path)
+    system("mkdir #{report_dir}") unless File.exists?(report_dir)
+    
+    report = Zucchini::ReportView.new(features, ci, report_html_path) 
     html   = (ERB.new(File.open(template_path).read)).result(report.get_binding)
     
     File.open(report_html_path, 'w+') { |f| f.write(html) }
