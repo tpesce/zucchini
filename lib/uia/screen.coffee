@@ -28,3 +28,8 @@ class Screen
     'Clear the "([^"]*)" field$': (element) ->
       throw "Element '#{element}' not defined for the screen '#{@name}'" unless @elements[element]
       @elements[element]().setValue ""
+
+    'Dismiss the alert' : ->
+      alert = app.alert()
+      throw "No alert found to dismiss on screen '#{@name}'" if isNullElement alert
+      alert.defaultButton().tap()
