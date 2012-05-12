@@ -5,6 +5,7 @@ class Screen
   elements: {}                           
   actions :
     'Take a screenshot$' : ->
+      target.delay(0.1)
       target.captureScreenWithName(@name)
 
     'Take a screenshot named "([^"]*)"$' : (name) ->
