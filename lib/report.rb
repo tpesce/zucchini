@@ -22,9 +22,9 @@ class Zucchini::Report
     report_html_path
   end
   
-  def self.present(features, ci)
+  def self.present(features, ci, report_html_path)
     puts self.text(features)
-    system "open #{self.html(features, ci)}"  
+    system "open #{self.html(features, ci, report_html_path)}"  
   end
   
 end
