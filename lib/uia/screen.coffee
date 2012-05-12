@@ -19,3 +19,12 @@ class Screen
 
     'Confirm "([^"]*)"$' : (element) ->
       @actions['Tap "([^"]*)"$'].bind(this)(element)
+
+    'Type "([^"]*)" in the "([^"]*)" field$': (text,element) ->
+      throw "Element '#{element}' not defined for the screen '#{@name}'" unless @elements[element]
+      @elements[element]().tap()
+      app.keyboard().typeString text
+
+    'Clear the "([^"]*)" field$': (element) ->
+      throw "Element '#{element}' not defined for the screen '#{@name}'" unless @elements[element]
+      @elements[element]().setValue ""
