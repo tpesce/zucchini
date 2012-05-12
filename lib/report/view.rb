@@ -1,4 +1,5 @@
 require 'time'
+require 'pathname'
 
 class Zucchini::ReportView
   
@@ -7,6 +8,7 @@ class Zucchini::ReportView
     @device      = features[0].device
     @time        = Time.now.strftime("%T, %e %B %Y")
     @ci          = ci ? 'ci' : ''
+    @report_html_path = report_html_path
     
     zucchini_path = File.expand_path(File.dirname(__FILE__))
     assets_path = File.dirname(report_html_path)
@@ -19,5 +21,12 @@ class Zucchini::ReportView
   
   def get_binding
     binding
+  end
+    
+  def relative_image_path(abs_image_path)
+    unless abs_image_path.nil? then
+      report_path = Pathname.new(File.expand_path(File.dirname(@report_html_path)))
+      rel_image_path = Pathname.new(abs_image_path).relative_path_from(report_path)
+    end
   end
 end
