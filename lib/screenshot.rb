@@ -45,7 +45,7 @@ class Zucchini::Screenshot
     if @test_path
       FileUtils.mkdir_p(File.dirname(@diff_path))
       
-      out = `compare -metric AE -fuzz 2% -subimage-search \"#{@masked_paths[:specifically]}\" \"#{@test_path}\" \"#{@diff_path}\" 2>&1`
+      out = `compare -metric AE -fuzz 2% \"#{@masked_paths[:specifically]}\" \"#{@test_path}\" \"#{@diff_path}\" 2>&1`
       @diff = (out == "0\n") ? [:passed, nil] : [:failed, out]
       @diff = [:pending, @diff[1]] if @pending
     else
