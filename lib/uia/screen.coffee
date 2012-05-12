@@ -9,6 +9,7 @@ class Screen
       target.captureScreenWithName(@name)
 
     'Take a screenshot named "([^"]*)"$' : (name) ->
+      target.delay(0.1)
       target.captureScreenWithName(name)
 
     'Tap "([^"]*)"$' : (element) ->
