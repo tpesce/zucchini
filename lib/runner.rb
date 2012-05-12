@@ -6,6 +6,7 @@ class Zucchini::Runner < Clamp::Command
   option %W(-c --collect), :flag, "only collect the screenshots from the device"
   option %W(-p --compare), :flag, "perform screenshots comparison based on the last collection"
   option "--ci",           :flag, "produce a CI version of the report after comparison"
+  option "--[no-]launch",  :flag, "should the report be auto launched on completion?"
 
   def execute
     raise "Directory #{path} does not exist" unless File.exists?(path)
@@ -18,7 +19,7 @@ class Zucchini::Runner < Clamp::Command
     @device = Zucchini::Config.device(ENV['ZUCCHINI_DEVICE'])   
     
     @template = detect_template
-    
+      
     exit run 
   end
   
@@ -37,7 +38,14 @@ class Zucchini::Runner < Clamp::Command
     
     compare_threads.each { |name, t| t.abort_on_exception = true; t.join }
     
-    Zucchini::Report.present(features, ci?, report_path) unless (collect? && !compare?)
+    unless (collect? && !compare?)
+      if launch?.nil? || launch? 
+        Zucchini::Report.present(features, ci?, report_path) 
+      else 
+        Zucchini::Report.html(features, ci?, report_path)
+      end
+    end
+
     features.inject(true){ |result, feature| result &= feature.succeeded }
   end
   
