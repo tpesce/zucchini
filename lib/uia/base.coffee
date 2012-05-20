@@ -15,6 +15,9 @@ extend = (obj, mixin) ->
 puts = (text) ->
   UIALogger.logMessage text
 
+isNullElement = (element) ->
+  element.toString() == "[object UIAElementNil]"
+
 target = UIATarget.localTarget()
 app    = target.frontMostApp()
 view   = app.mainWindow()
@@ -61,7 +64,7 @@ class Zucchini
       try
         screen = eval("new #{screenName.camelCase()}Screen")
       catch error
-        throw "Screen '#{screenName}' not defined"
+        screen = new Screen(screenName)
 
       for line in lines.slice(1)
          functionFound = false
