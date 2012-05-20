@@ -68,7 +68,7 @@ class Zucchini
       try
         screen = eval("new #{screenName.camelCase()}Screen")
       catch error
-        throw "Screen '#{screenName}' not defined"
+        screen = new Screen(screenName)
 
       for line in lines.slice(1)
          functionFound = false

@@ -3,6 +3,13 @@ class Screen
     if @anchor then target.waitForElement @anchor()
   
   elements: {}                           
+
+  element: (name) ->
+    context = if isNullElement app.actionSheet() then view else app.actionSheet()
+    element = if @elements[name] then @elements[name] else context.$(name)
+    throw "Element '#{name}' not defined for the screen '#{@name}'" unless element
+    element
+
   actions :
     'Take a screenshot$' : ->
       target.delay(0.1)
@@ -13,8 +20,7 @@ class Screen
       target.captureScreenWithName(name)
 
     'Tap "([^"]*)"$' : (element) ->
-      throw "Element '#{element}' not defined for the screen '#{@name}'" unless @elements[element]
-      @elements[element]().tap()
+      @element(element).tap()
 
     'Wait for "([^"]*)" second[s]*$' : (seconds) ->
       target.delay(seconds)
