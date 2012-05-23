@@ -6,7 +6,7 @@ class Screen
 
   element: (name) ->
     context = if isNullElement app.actionSheet() then view else app.actionSheet()
-    element = if @elements[name] then @elements[name] else context.$(name)
+    element = if @elements[name] then @elements[name]() else context.$(name)
     throw "Element '#{name}' not defined for the screen '#{@name}'" unless element
     element
 
