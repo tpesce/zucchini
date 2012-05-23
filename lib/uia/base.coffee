@@ -71,6 +71,7 @@ class Zucchini
         screen = new Screen(screenName)
 
       for line in lines.slice(1)
+         puts line
          functionFound = false
          for regExpText, func of screen.actions
             match = line.trim().match(new RegExp(regExpText))
