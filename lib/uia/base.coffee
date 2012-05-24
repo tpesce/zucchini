@@ -27,12 +27,14 @@ app    = target.frontMostApp()
 view   = app.mainWindow()
 
 UIAElement.prototype.$ = (name) ->
+  puts "-> name = #{name}"
   target.pushTimeout(0)
   elem = null
   for el in this.elements()
     elem = if el.name() == name then el else el.$(name)
     break if elem
   target.popTimeout()
+  puts "elem = #{elem}"
   elem
 
 target.waitForElement = (element) ->
