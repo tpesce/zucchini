@@ -29,13 +29,13 @@ class Screen
       @actions['Tap "([^"]*)"$'].bind(this)(element)
 
     'Type "([^"]*)" in the "([^"]*)" field$': (text,element) ->
-      throw "Element '#{element}' not defined for the screen '#{@name}'" unless @elements[element]
-      @elements[element]().tap()
+      throw "Element '#{element}' not defined for the screen '#{@name}'" unless @element(element)
+      @element(element).tap()
       app.keyboard().typeString text
 
     'Clear the "([^"]*)" field$': (element) ->
-      throw "Element '#{element}' not defined for the screen '#{@name}'" unless @elements[element]
-      @elements[element]().setValue ""
+      throw "Element '#{element}' not defined for the screen '#{@name}'" unless @element(element)
+      @element(element).setValue ""
 
     'Dismiss the alert' : ->
       alert = app.alert()
