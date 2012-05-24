@@ -48,6 +48,7 @@ target.waitForElement = (element) ->
     else
       @delay 0.5
       counter++
+  puts "Didn't find the element:  #{element}" unless found
 
 screensCount = 0
 target.captureScreenWithName_ = target.captureScreenWithName

@@ -1,6 +1,7 @@
 class Screen
   constructor: (@name) ->
     if @anchor then target.waitForElement @anchor()
+    else if @name then target.waitForElement view.elements()[@name]
   
   elements: {}                           
 
