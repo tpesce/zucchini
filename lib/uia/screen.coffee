@@ -4,8 +4,11 @@ class Screen
   
   elements: {}                           
 
-  element: (name) ->
-    context = if isNullElement app.actionSheet() then view else app.actionSheet()
+  element: (name,context) ->
+    puts "Need to find "+name
+#    actionSheet = app.actionSheet()
+#    context = if isNullElement actionSheet || !actionSheet.checkIsValid() then view else actionSheet
+    puts "Using context "+context
     element = if @elements[name] then @elements[name]() else context.$(name)
     throw "Element '#{name}' not defined for the screen '#{@name}'" unless element
     element
@@ -20,7 +23,10 @@ class Screen
       target.captureScreenWithName(name)
 
     'Tap "([^"]*)"$' : (element) ->
-      @element(element).tap()
+      @element(element,view).tap()
+
+    'Choose "([^"]*)"$' : (actionSheetOptionName) ->
+      @element(actionSheetOptionName,app.actionSheet()).tap()
 
     'Wait for "([^"]*)" second[s]*$' : (seconds) ->
       target.delay(seconds)
@@ -29,13 +35,11 @@ class Screen
       @actions['Tap "([^"]*)"$'].bind(this)(element)
 
     'Type "([^"]*)" in the "([^"]*)" field$': (text,element) ->
-      throw "Element '#{element}' not defined for the screen '#{@name}'" unless @element(element)
-      @element(element).tap()
+      @element(element,view).tap()
       app.keyboard().typeString text
 
-    'Clear the "([^"]*)" field$': (element) ->
-      throw "Element '#{element}' not defined for the screen '#{@name}'" unless @element(element)
-      @element(element).setValue ""
+    'Clear the "([^"]*)" field$': (elementName) ->
+      @element(elementName,view).setValue ""
 
     'Dismiss the alert' : ->
       alert = app.alert()

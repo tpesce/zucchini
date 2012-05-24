@@ -30,6 +30,7 @@ UIAElement.prototype.$ = (name) ->
   target.pushTimeout(0)
   elem = null
   for el in this.elements()
+    puts " - Checking "+el.toString()+" "+el.name()
     elem = if el.name() == name then el else el.$(name)
     break if elem
   target.popTimeout()
