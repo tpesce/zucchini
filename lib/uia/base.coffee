@@ -26,12 +26,12 @@ target = UIATarget.localTarget()
 app    = target.frontMostApp()
 view   = app.mainWindow()
 
-UIAElement.prototype.$ = (name) ->
+UIAElement.prototype.$ = (name,requiredType = UIAElement) ->
   target.pushTimeout(0)
   elem = null
   for el in this.elements()
     puts " - Checking "+el.toString()+" "+el.name()
-    elem = if el.name() == name then el else el.$(name)
+    elem = if el.name() == name and el instanceof requiredType then el else el.$(name,requiredType)
     break if elem
   target.popTimeout()
   elem

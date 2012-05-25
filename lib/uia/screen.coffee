@@ -5,12 +5,10 @@ class Screen
   
   elements: {}                           
 
-  element: (name,context) ->
+  element: (name,context,requiredType = UIAElement) ->
     puts "Need to find "+name
-#    actionSheet = app.actionSheet()
-#    context = if isNullElement actionSheet || !actionSheet.checkIsValid() then view else actionSheet
     puts "Using context "+context
-    element = if @elements[name] then @elements[name]() else context.$(name)
+    element = if @elements[name] then @elements[name]() else context.$(name,requiredType)
     throw "Element '#{name}' not defined for the screen '#{@name}'" unless element
     element
 
