@@ -5,8 +5,8 @@ class Screen
   
   elements: {}                           
 
-  element: (name,context) ->
-    element = if @elements[name] then @elements[name]() else context.$(name)
+  element: (name,context,requiredType = UIAElement) ->
+    element = if @elements[name] then @elements[name]() else context.$(name,requiredType)
     throw "Element '#{name}' not defined for the screen '#{@name}'" unless element
     element
 
