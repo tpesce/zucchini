@@ -34,8 +34,15 @@ class Screen
       @actions['Tap "([^"]*)"$'].bind(this)(element)
 
     'Type "([^"]*)" in the "([^"]*)" field$': (text,element) ->
-      @element(element,view).tap()
+      textfield = @element(element,view,UIATextField)
+      textfield ||= @element(element,view,UIASecureTextField)
+      textfield.tap()
       app.keyboard().typeString text
+
+    'Set value of the "([^"]*)" field to "([^"]*)"': (fieldName,value) ->
+      textfield = @element(fieldName,view,UIATextField)
+      textfield ||= @element(fieldName,view,UIASecureTextField)
+      textfield.setValue value
 
     'Clear the "([^"]*)" field$': (elementName) ->
       @element(elementName,view).setValue ""
