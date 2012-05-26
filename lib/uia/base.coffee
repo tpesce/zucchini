@@ -15,6 +15,9 @@ extend = (obj, mixin) ->
 puts = (text) ->
   UIALogger.logMessage text
 
+isNullElement = (element) ->
+  element.toString() == "[object UIAElementNil]"
+
 target = UIATarget.localTarget()
 app    = target.frontMostApp()
 view   = app.mainWindow()
