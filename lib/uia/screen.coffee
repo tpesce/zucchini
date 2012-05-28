@@ -40,8 +40,8 @@ class Screen
       app.keyboard().typeString text
 
     'Clear the "([^"]*)" field$': (elementName) ->
-      textfield = @element(element,view,UIATextField)
-      textfield ||= @element(element,view,UIASecureTextField)
+      textfield = @element(elementName,view,UIATextField)
+      textfield ||= @element(elementName,view,UIASecureTextField)
       textfield.setValue ""
 
     'Dismiss the alert' : ->
