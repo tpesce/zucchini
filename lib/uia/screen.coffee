@@ -39,11 +39,6 @@ class Screen
       textfield.tap()
       app.keyboard().typeString text
 
-    'Set value of the "([^"]*)" field to "([^"]*)"': (fieldName,value) ->
-      textfield = @element(fieldName,view,UIATextField)
-      textfield ||= @element(fieldName,view,UIASecureTextField)
-      textfield.setValue value
-
     'Clear the "([^"]*)" field$': (elementName) ->
       @element(elementName,view).setValue ""
 
