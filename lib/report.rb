@@ -13,6 +13,7 @@ class Zucchini::Report
   end
   
   def self.html(features, ci, report_html_path = "/tmp/zucchini_report.html" )
+    puts self.text(features)
     template_path = File.expand_path("#{File.dirname(__FILE__)}/report/template.erb")
     
     report_dir = File.dirname(report_html_path)
@@ -26,7 +27,6 @@ class Zucchini::Report
   end
   
   def self.present(features, ci, report_html_path)
-    puts self.text(features)
     system "open #{self.html(features, ci, report_html_path)}"  
   end
   
