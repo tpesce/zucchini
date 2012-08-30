@@ -9,7 +9,7 @@ module Zucchini
   
     def self.base_path=(base_path)
       @@base_path = base_path
-      @@config    = YAML::load_file("#{base_path}/support/config.yml")
+      @@config    = YAML::load(ERB::new(File::read("#{base_path}/support/config.yml")).result)
     end
                   
     def self.app
